@@ -21,9 +21,9 @@ tasks:
           - r1.15
 
     scopes: [
-      "queue:create-task:lowest:proj-deepspeech/ci",
-      "queue:create-task:lowest:proj-deepspeech/win-b",
-      "queue:create-task:lowest:proj-deepspeech/ds-macos-heavy",
+      "queue:create-task:highest:proj-deepspeech/ci",
+      "queue:create-task:highest:proj-deepspeech/win-b",
+      "queue:create-task:highest:proj-deepspeech/ds-macos-heavy",
       "queue:route:index.project.deepspeech.*",
       "queue:scheduler-id:taskcluster-github"
     ]
