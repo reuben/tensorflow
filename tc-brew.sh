@@ -36,8 +36,8 @@ if [ "${LOCAL_BREW}" != "${local_prefix}" ]; then
 fi;
 
 # coreutils, pyenv-virtualenv required for build of tensorflow
-# node@8 pkg-config sox swig required for later build of deepspeech
-all_pkgs="coreutils pyenv-virtualenv node@8 pkg-config sox swig"
+# node@10 pkg-config sox swig required for later build of deepspeech
+all_pkgs="coreutils pyenv-virtualenv node@10 pkg-config sox swig"
 
 for pkg in ${all_pkgs};
 do
