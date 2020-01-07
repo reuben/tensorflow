@@ -2879,8 +2879,6 @@ tf_cuda_library(
             "framework/fake_input.*",
             "framework/op_gen_lib.*",
             "framework/reader_base.*",
-            "util/memmapped_file_system.*",
-            "util/memmapped_file_system_writer.*",
             "util/stats_calculator.*",
             "util/version_info.cc",
             "util/env_var.cc",
