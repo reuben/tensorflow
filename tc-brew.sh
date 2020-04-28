@@ -18,7 +18,7 @@ mkdir -p "${HOMEBREW_CACHE}" || true
 
 # Make sure to verify there is a 'brew' binary there, otherwise install things.
 if [ ! -x "${LOCAL_BREW}/bin/brew" ]; then
-    curl -L https://github.com/Homebrew/brew/tarball/2.1.14 | tar xz --strip 1 -C "${LOCAL_BREW}"
+    curl -L https://github.com/Homebrew/brew/tarball/2.2.14 | tar xz --strip 1 -C "${LOCAL_BREW}"
 fi;
 
 echo "local brew list (should be empty) ..."
@@ -36,8 +36,7 @@ if [ "${LOCAL_BREW}" != "${local_prefix}" ]; then
 fi;
 
 # coreutils, pyenv-virtualenv required for build of tensorflow
-# node@10 pkg-config sox swig required for later build of deepspeech
-all_pkgs="coreutils pyenv-virtualenv node@10 pkg-config sox swig"
+all_pkgs="coreutils pyenv-virtualenv"
 
 for pkg in ${all_pkgs};
 do
