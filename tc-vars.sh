@@ -184,7 +184,7 @@ if [ "${OS}" = "${TC_MSYS_VERSION}" ]; then
     # it messes with cxx_builtin_include_directory
     BAZEL_EXTRA_FLAGS="--action_env=PATH=${TC_WIN_BUILD_PATH} --action_env=TEMP=${TEMP} --action_env=TMP=${TMP}"
 else
-    BAZEL_EXTRA_FLAGS="--copt=-fvisibility=hidden"
+    BAZEL_EXTRA_FLAGS="--config=noaws --config=nogcp --config=nohdfs --config=nonccl --copt=-fvisibility=hidden"
 fi
 
 ### Define build targets that we will re-ues in sourcing scripts.
