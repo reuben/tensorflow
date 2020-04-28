@@ -32,7 +32,7 @@ payload:
       content:
         sha256: 4e799b5c3efcf9efcb84923656b7bcff16f75a666911abd6620ea8e5e1e9870c
         url: >-
-          https://sourceforge.net/projects/msys2/files/Base/x86_64/msys2-base-x86_64-20180531.tar.xz/download
+          http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20180531.tar.xz
   env:
     MSYS: 'winsymlinks:nativestrict'
     TC_MSYS_VERSION: 'MSYS_NT-6.3'

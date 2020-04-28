@@ -27,15 +27,14 @@ routes:
 
 payload:
   maxRunTime: { $eval: to_int(build.maxRunTime) }
-  image: "ubuntu:14.04"
+  image: "ubuntu:16.04"
 
   command:
     - "/bin/bash"
     - "--login"
     - "-cxe"
     - >
-      apt-get -qq update && apt-get -qq -y install git python3-pip &&
-      apt-get -qq -y install make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev &&
+      apt-get -qq update && apt-get -qq -y install git python-pip python3-pip sudo &&
       adduser --system --home /home/build-user build-user &&
       cd /home/build-user/ &&
       echo -e "#!/bin/bash\nset -xe\nenv && id && mkdir ~/DeepSpeech/ && git clone --quiet ${event.head.repo.url} ~/DeepSpeech/tf/ && cd ~/DeepSpeech/tf && git checkout --quiet ${event.head.sha}" > /tmp/clone.sh && chmod +x /tmp/clone.sh &&

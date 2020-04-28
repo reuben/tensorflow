@@ -30,7 +30,6 @@ download $BAZEL_URL $BAZEL_SHA256
 if [ ! -z "${install_cuda}" ]; then
     download $CUDA_URL $CUDA_SHA256
     download $CUDNN_URL $CUDNN_SHA256
-    download $NCCL_URL $NCCL_SHA256
 fi;
 
 if [ ! -z "${install_android}" ]; then
@@ -67,13 +66,10 @@ if [ ! -z "${install_cuda}" ]; then
     mkdir -p ${DS_ROOT_TASK}/DeepSpeech/CUDA/ || true
     pushd ${DS_ROOT_TASK}
         CUDA_FILE=`basename ${CUDA_URL}`
-        PERL5LIB=. sh ${DS_ROOT_TASK}/dls/${CUDA_FILE} --silent --verbose --override --toolkit --toolkitpath=${DS_ROOT_TASK}/DeepSpeech/CUDA/
+        PERL5LIB=. sh ${DS_ROOT_TASK}/dls/${CUDA_FILE} --silent --override --toolkit --toolkitpath=${DS_ROOT_TASK}/DeepSpeech/CUDA/ --defaultroot=${DS_ROOT_TASK}/DeepSpeech/CUDA/
 
         CUDNN_FILE=`basename ${CUDNN_URL}`
         tar xvf ${DS_ROOT_TASK}/dls/${CUDNN_FILE} --strip-components=1 -C ${DS_ROOT_TASK}/DeepSpeech/CUDA/
-
-        NCCL_FILE=`basename ${NCCL_URL}`
-        tar xvf ${DS_ROOT_TASK}/dls/${NCCL_FILE} --strip-components=1 -C ${DS_ROOT_TASK}/DeepSpeech/CUDA/
     popd
 
     LD_LIBRARY_PATH=${DS_ROOT_TASK}/DeepSpeech/CUDA/lib64/:${DS_ROOT_TASK}/DeepSpeech/CUDA/lib64/stubs/:$LD_LIBRARY_PATH

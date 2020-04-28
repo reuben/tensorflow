@@ -8,4 +8,4 @@ taskcluster:
     workerType: ds-macos-heavy
   win:
     provisionerId: proj-deepspeech
-    workerType: win-b
+    workerType: win

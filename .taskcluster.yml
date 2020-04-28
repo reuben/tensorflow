@@ -22,7 +22,7 @@ tasks:
 
     scopes: [
       "queue:create-task:highest:proj-deepspeech/ci",
-      "queue:create-task:highest:proj-deepspeech/win-b",
+      "queue:create-task:highest:proj-deepspeech/win",
       "queue:create-task:highest:proj-deepspeech/ds-macos-heavy",
       "queue:route:index.project.deepspeech.*",
       "queue:scheduler-id:taskcluster-github"

@@ -9,15 +9,12 @@ if [ "${OS}" = "Linux" ]; then
     BAZEL_URL=https://github.com/bazelbuild/bazel/releases/download/2.0.0/bazel-2.0.0-installer-linux-x86_64.sh
     BAZEL_SHA256=2fbdc9c0e3d376697caf0ee3673b7c9475214068c55a01b9744891e131f90b87
 
-    CUDA_URL=https://developer.nvidia.com/compute/cuda/10.0/Prod/local_installers/cuda_10.0.130_410.48_linux
-    CUDA_SHA256=92351f0e4346694d0fcb4ea1539856c9eb82060c25654463bfd8574ec35ee39a
+    CUDA_URL=http://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run
+    CUDA_SHA256=e7c22dc21278eb1b82f34a60ad7640b41ad3943d929bebda3008b72536855d31
 
-    # From https://gitlab.com/nvidia/cuda/blob/centos7/10.0/devel/cudnn7/Dockerfile
-    CUDNN_URL=http://developer.download.nvidia.com/compute/redist/cudnn/v7.6.0/cudnn-10.0-linux-x64-v7.6.0.64.tgz
-    CUDNN_SHA256=c4e1ee4168f4cadabaa989487a47bed09f34d34e35398b6084a2699d11bd2560
-
-    NCCL_URL=https://s3.amazonaws.com/pytorch/nccl_2.3.7-1%2Bcuda10.0_x86_64.txz
-    NCCL_SHA256=8b41f19cfa0054aae2550ba0e02c167c0e052ee247c79f4b97aaa3167d12efde
+    # From https://gitlab.com/nvidia/cuda/blob/centos7/10.1/devel/cudnn7/Dockerfile
+    CUDNN_URL=http://developer.download.nvidia.com/compute/redist/cudnn/v7.6.0/cudnn-10.1-linux-x64-v7.6.0.64.tgz
+    CUDNN_SHA256=e956c6f9222fcb867a10449cfc76dee5cfd7c7531021d95fe9586d7e043b57d7
 
     ANDROID_NDK_URL=https://dl.google.com/android/repository/android-ndk-r18b-linux-x86_64.zip
     ANDROID_NDK_SHA256=4f61cbe4bbf6406aa5ef2ae871def78010eed6271af72de83f8bd0b07a9fd3fd
@@ -43,7 +40,7 @@ elif [ "${OS}" = "${TC_MSYS_VERSION}" ]; then
     export TASKCLUSTER_ARTIFACTS="$(cygpath ${TASKCLUSTER_ARTIFACTS})"
 
     export DS_ROOT_TASK=${TASKCLUSTER_TASK_DIR}
-    export BAZEL_VC='C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC'
+    export BAZEL_VC='C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC'
     export BAZEL_SH='C:\builds\tc-workdir\msys64\usr\bin\bash'
     export TC_WIN_BUILD_PATH='C:\builds\tc-workdir\msys64\usr\bin;C:\Python36'
     export MSYS2_ARG_CONV_EXCL='//'
@@ -55,7 +52,7 @@ elif [ "${OS}" = "${TC_MSYS_VERSION}" ]; then
     BAZEL_URL=https://github.com/bazelbuild/bazel/releases/download/2.0.0/bazel-2.0.0-windows-x86_64.exe
     BAZEL_SHA256=cc7b3ff6f4bfd6bc2121a80656afec66ee57713e8b88e9d2fb58b4eddf271268
 
-    CUDA_INSTALL_DIRECTORY=$(cygpath 'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0')
+    CUDA_INSTALL_DIRECTORY=$(cygpath 'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1')
 
     SHA_SUM="sha256sum -c --strict"
     WGET=wget
@@ -118,6 +115,8 @@ export TF_DOWNLOAD_CLANG=0
 export TF_SET_ANDROID_WORKSPACE=0
 export TF_NEED_TENSORRT=0
 export TF_NEED_ROCM=0
+
+# This should be gcc-5, hopefully. CUDA and TensorFlow might not be happy, otherwise.
 export GCC_HOST_COMPILER_PATH=/usr/bin/gcc
 
 if [ "${OS}" = "${TC_MSYS_VERSION}" ]; then
@@ -165,9 +164,9 @@ NVCC_COMPUTE="3.5"
 
 ### Define build parameters/env variables that we will re-ues in sourcing scripts.
 if [ "${OS}" = "${TC_MSYS_VERSION}" ]; then
-    TF_CUDA_FLAGS="TF_CUDA_CLANG=0 TF_CUDA_VERSION=10.0 TF_CUDNN_VERSION=7.6.0 CUDNN_INSTALL_PATH=\"${CUDA_INSTALL_DIRECTORY}\" TF_CUDA_PATHS=\"${CUDA_INSTALL_DIRECTORY}\" TF_CUDA_COMPUTE_CAPABILITIES=\"${NVCC_COMPUTE}\""
+    TF_CUDA_FLAGS="TF_CUDA_CLANG=0 TF_CUDA_VERSION=10.1 TF_CUDNN_VERSION=7.6.0 CUDNN_INSTALL_PATH=\"${CUDA_INSTALL_DIRECTORY}\" TF_CUDA_PATHS=\"${CUDA_INSTALL_DIRECTORY}\" TF_CUDA_COMPUTE_CAPABILITIES=\"${NVCC_COMPUTE}\""
 else
-    TF_CUDA_FLAGS="TF_CUDA_CLANG=0 TF_CUDA_VERSION=10.0 TF_CUDNN_VERSION=7.6.0 CUDNN_INSTALL_PATH=\"${DS_ROOT_TASK}/DeepSpeech/CUDA\" TF_CUDA_PATHS=\"${DS_ROOT_TASK}/DeepSpeech/CUDA\" TF_NCCL_VERSION=2.3 TF_CUDA_COMPUTE_CAPABILITIES=\"${NVCC_COMPUTE}\""
+    TF_CUDA_FLAGS="TF_CUDA_CLANG=0 TF_CUDA_VERSION=10.1 TF_CUDNN_VERSION=7.6.0 CUDNN_INSTALL_PATH=\"${DS_ROOT_TASK}/DeepSpeech/CUDA\" TF_CUDA_PATHS=\"${DS_ROOT_TASK}/DeepSpeech/CUDA\" TF_CUDA_COMPUTE_CAPABILITIES=\"${NVCC_COMPUTE}\""
 fi
 BAZEL_ARM_FLAGS="--config=rpi3 --config=rpi3_opt --copt=-DTFLITE_WITH_RUY_GEMV"
 BAZEL_ARM64_FLAGS="--config=rpi3-armv8 --config=rpi3-armv8_opt --copt=-DTFLITE_WITH_RUY_GEMV"
